@@ -12,10 +12,12 @@ DEFINES += CMLIB_LIBRARY
 INCLUDEPATH += source
 
 SOURCES += \
+    source/controllers/MasterController.cpp \
     source/models/Client.cpp
 
 HEADERS += \
     source/cm-lib_global.h \
+    source/controllers/MasterController.h \
     source/models/Client.h
 
 TRANSLATIONS += \
