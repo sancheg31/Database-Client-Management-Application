@@ -11,11 +11,20 @@ namespace controllers {
 class CMLIB_EXPORT CommandController : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QQmlListProperty<cm::framework::Command> ui_createClientViewContextCommands READ createClientViewContextCommands CONSTANT)
+
 public:
-    explicit CommandController(QObject *parent = nullptr): QObject(parent) { }
+    explicit CommandController(QObject *parent = nullptr);
+    ~CommandController();
 
-signals:
+    QQmlListProperty<cm::framework::Command> createClientViewContextCommands();
 
+public slots:
+    void onCreateClientSaveExecuted();
+
+private:
+    class Implementation;
+    QScopedPointer<Implementation> impl;
 };
 
 } //controllers
