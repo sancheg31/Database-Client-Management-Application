@@ -25,36 +25,52 @@ Window {
         id: greenRectangleInTheCentreRB
         width: 100
         height: 100
-        anchors.centerIn: parent
-        anchors.verticalCenterOffset: 110
-        anchors.horizontalCenterOffset: 110
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            verticalCenter: parent.verticalCenter
+            verticalCenterOffset: (blackRectangleInTheCentre.width+this.width) / 2
+            horizontalCenterOffset: (blackRectangleInTheCentre.height+this.height) / 2
+            margins: 20
+        }
         color: "#008000"
     }
     Rectangle {
         id: greenRectangleInTheCentreLB
         width: 100
         height: 100
-        anchors.centerIn: parent
-        anchors.verticalCenterOffset: 110
-        anchors.horizontalCenterOffset: -110
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            verticalCenter: parent.verticalCenter
+            verticalCenterOffset: (blackRectangleInTheCentre.width+this.width) / 2
+            horizontalCenterOffset: - (blackRectangleInTheCentre.height+this.height) / 2
+            margins: 20
+        }
         color: "#008000"
     }
     Rectangle {
         id: greenRectangleInTheCentreRT
         width: 100
         height: 100
-        anchors.centerIn: parent
-        anchors.verticalCenterOffset: -110
-        anchors.horizontalCenterOffset: 110
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            verticalCenter: parent.verticalCenter
+            verticalCenterOffset: -(blackRectangleInTheCentre.width+this.width) / 2
+            horizontalCenterOffset: (blackRectangleInTheCentre.height+this.height) / 2
+            margins: 20
+        }
         color: "#008000"
     }
     Rectangle {
         id: greenRectangleInTheCentreLT
         width: 100
         height: 100
-        anchors.centerIn: parent
-        anchors.verticalCenterOffset: -110
-        anchors.horizontalCenterOffset: -110
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            verticalCenter: parent.verticalCenter
+            verticalCenterOffset: -(blackRectangleInTheCentre.width+this.width) / 2
+            horizontalCenterOffset: -(blackRectangleInTheCentre.height+this.height) / 2
+            margins: 20
+        }
         color: "#008000"
     }
 
@@ -64,6 +80,7 @@ Window {
         height: 100
         anchors {
             top: parent.top
+            margins: 20
             left: parent.left
         }
         color: "#800000"
@@ -76,8 +93,21 @@ Window {
         anchors {
             top: redRectangleTopLeftCorner.bottom
             left: parent.left
+            margins: 20
         }
         color: "#000080"
+    }
+
+    Rectangle {
+        id: purpleRectangleTopLeftCorner
+        width: 100
+        height: 100
+        anchors {
+            top: blueRectangleTopLeftCorner.bottom
+            left: parent.left
+            margins: 20
+        }
+        color: "#800080"
     }
 
     Rectangle {

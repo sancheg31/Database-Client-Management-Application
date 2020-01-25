@@ -1,7 +1,14 @@
 import QtQuick 2.9
+import "../assets"
 
-Rectangle {
-    width: 400
-    height: 200
-    color: "#f4c842"
+Item {
+    Rectangle {
+        anchors.fill: parent
+        color: Style.colorBackground
+        Text {
+            anchors.centerIn: parent
+            text: "Splash View"
+        }
+    }
 }
+
