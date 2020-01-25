@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/views">
         <file alias = "AnchorsDemo.qml">views/AnchorsDemo.qml</file>
+        <file alias = "SizingDemo.qml">views/SizingDemo.qml</file>
         <file alias = "MasterView.qml">views/MasterView.qml</file>
         <file alias = "CreateClientView.qml">views/CreateClientView.qml</file>
         <file alias = "DashboardView.qml">views/DashboardView.qml</file>

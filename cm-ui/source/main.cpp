@@ -10,10 +10,17 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
+    qmlRegisterType<cm::controllers::MasterController>("CM", 1, 0, "MasterController");
+    qmlRegisterType<cm::controllers::NavigationController>("CM", 1, 0, "NavigationController");
     cm::controllers::MasterController masterController;
     QQmlApplicationEngine engine;
+    engine.addImportPath("qrc:/assets/");
+    engine.addImportPath("qrc:/components/");
     engine.rootContext()->setContextProperty("masterController", &masterController);
-    engine.load(QUrl(QStringLiteral("qrc:/views/AnchorsDemo.qml")));
+    engine.load(QUrl(QStringLiteral("qrc:/views/MasterView.qml")));
+
+    //engine.load(QUrl(QStringLiteral("qrc:/views/AnchorsDemo.qml")));
+    //engine.load(QUrl(QStringLiteral("qrc:/views/SizingDemo.qml")));
     /*сonst QUrl url(QStringLiteral("qrc:/views/MasterView.qml"));
 
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

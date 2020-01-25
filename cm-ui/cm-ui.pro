@@ -22,13 +22,16 @@ SOURCES += \
 
 LIBS += -L$$PWD/../binaries/$$DESTINATION_PATH -lcm-lib
 
-RESOURCES += qml.qrc
+RESOURCES += qml.qrc \
+    assets.qrc \
+    components.qrc
 
 TRANSLATIONS += \
     cm-ui_en_US.ts
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
-QML_IMPORT_PATH = $$PWD
+QML_IMPORT_PATH += $$PWD
+QML_IMPORT_PATH += $$PWD/assets
 
 # Additional import path used to resolve QML modules just for Qt Quick Designer
 QML_DESIGNER_IMPORT_PATH =
@@ -39,8 +42,13 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
-    DashboardView.qml \
-    EditClientView.qml \
-    FindClientView.qml \
-    SplashView.qml \
-    views/AnchorsDemo.qml
+    assets/Style.qml \
+    components.qml \
+    views/DashboardView.qml \
+    views/EditClientView.qml \
+    views/FindClientView.qml \
+    views/SplashView.qml \
+    views/CreateClientView.qml \
+    views/AnchorsDemo.qml \
+    views/SizingDemo.qml \
+    views/MasterView.qml
