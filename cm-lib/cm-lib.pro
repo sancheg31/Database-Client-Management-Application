@@ -21,12 +21,17 @@ DEFINES += CMLIB_LIBRARY
 INCLUDEPATH += source
 
 SOURCES += \
+    source/controllers/CommandController.cpp \
     source/controllers/MasterController.cpp \
+    source/framework/Command.cpp \
     source/models/Client.cpp
 
 HEADERS += \
     source/cm-lib_global.h \
+    source/controllers/CommandController.h \
     source/controllers/MasterController.h \
+    source/controllers/NavigationController.h \
+    source/framework/Command.h \
     source/models/Client.h
 
 TRANSLATIONS += \
