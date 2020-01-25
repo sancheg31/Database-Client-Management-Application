@@ -35,7 +35,7 @@ Window {
 
     NavigationBar {
         id: navigationBar
-        isCollapsed: false
+        isCollapsed: true
     }
 
 

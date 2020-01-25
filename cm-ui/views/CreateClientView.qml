@@ -1,5 +1,6 @@
 import QtQuick 2.9
 import "../assets"
+import "../components"
 
 Item {
     Rectangle {
@@ -10,5 +11,7 @@ Item {
             text: "Create Client View"
         }
     }
+    CommandBar {
+        commandList: masterController.ui_commandController.ui_createClientViewContextCommands
+    }
 }
-

@@ -31,7 +31,6 @@ TRANSLATIONS += \
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH += $$PWD
-QML_IMPORT_PATH += $$PWD/assets
 
 # Additional import path used to resolve QML modules just for Qt Quick Designer
 QML_DESIGNER_IMPORT_PATH =
@@ -43,7 +42,12 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 DISTFILES += \
     assets/Style.qml \
+    assets/fontawesome.ttf \
     components.qml \
+    components/CommandBar.qml \
+    components/NavigationBar.qml \
+    components/CommandButton.qml \
+    components/NavigationButton.qml \
     views/DashboardView.qml \
     views/EditClientView.qml \
     views/FindClientView.qml \
@@ -51,4 +55,6 @@ DISTFILES += \
     views/CreateClientView.qml \
     views/AnchorsDemo.qml \
     views/SizingDemo.qml \
-    views/MasterView.qml
+    views/MasterView.qml \
+    assets/qmldir \
+    components/qmldir \
