@@ -21,12 +21,22 @@ DEFINES += CMLIB_LIBRARY
 INCLUDEPATH += source
 
 SOURCES += \
+    data/DataDecorator.cpp \
+    data/DateTimeDecorator.cpp \
+    data/EnumeratorDecorator.cpp \
+    data/IntDecorator.cpp \
+    data/StringDecorator.cpp \
     source/controllers/CommandController.cpp \
     source/controllers/MasterController.cpp \
     source/framework/Command.cpp \
     source/models/Client.cpp
 
 HEADERS += \
+    data/DataDecorator.h \
+    data/DateTimeDecorator.h \
+    data/EnumeratorDecorator.h \
+    data/IntDecorator.h \
+    data/StringDecorator.h \
     source/cm-lib_global.h \
     source/controllers/CommandController.h \
     source/controllers/MasterController.h \
