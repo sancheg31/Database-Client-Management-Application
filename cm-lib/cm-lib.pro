@@ -21,28 +21,42 @@ DEFINES += CMLIB_LIBRARY
 INCLUDEPATH += source
 
 SOURCES += \
-    data/DataDecorator.cpp \
-    data/DateTimeDecorator.cpp \
-    data/EnumeratorDecorator.cpp \
-    data/IntDecorator.cpp \
-    data/StringDecorator.cpp \
+    source/data/DataDecorator.cpp \
+    source/data/DateTimeDecorator.cpp \
+    source/data/Entity.cpp \
+    source/data/EntityCollection.cpp \
+    source/data/EntityCollectionBase.cpp \
+    source/data/EntityCollectionObject.cpp \
+    source/data/EnumeratorDecorator.cpp \
+    source/data/IntDecorator.cpp \
+    source/data/StringDecorator.cpp \
     source/controllers/CommandController.cpp \
     source/controllers/MasterController.cpp \
     source/framework/Command.cpp \
-    source/models/Client.cpp
+    source/models/Address.cpp \
+    source/models/Appointment.cpp \
+    source/models/Client.cpp \
+    source/models/Contact.cpp
 
 HEADERS += \
-    data/DataDecorator.h \
-    data/DateTimeDecorator.h \
-    data/EnumeratorDecorator.h \
-    data/IntDecorator.h \
-    data/StringDecorator.h \
+    source/data/DataDecorator.h \
+    source/data/DateTimeDecorator.h \
+    source/data/Entity.h \
+    source/data/EntityCollection.h \
+    source/data/EntityCollectionBase.h \
+    source/data/EntityCollectionObject.h \
+    source/data/EnumeratorDecorator.h \
+    source/data/IntDecorator.h \
+    source/data/StringDecorator.h \
     source/cm-lib_global.h \
     source/controllers/CommandController.h \
     source/controllers/MasterController.h \
     source/controllers/NavigationController.h \
     source/framework/Command.h \
-    source/models/Client.h
+    source/models/Address.h \
+    source/models/Appointment.h \
+    source/models/Client.h \
+    source/models/Contact.h
 
 TRANSLATIONS += \
     cm-lib_en_US.ts
