@@ -1,17 +1,25 @@
 #include "Appointment.h"
 
+#include "data/DateTimeDecorator.h"
+#include "data/StringDecorator.h"
+
+using namespace cm::data;
 
 namespace cm {
 namespace models {
 
 
-Appointment::Appointment(QObject* parent): data::Entity(parent) {
-    startTime = static_cast<data::DateTimeDecorator*>(addDataItem(new data::DateTimeDecorator(this, "startTime", "StartTime")));
-    endTime = static_cast<data::DateTimeDecorator*>(addDataItem(new data::DateTimeDecorator(this, "endTime", "EndTime")));
-    notes = static_cast<data::StringDecorator*>(addDataItem(new data::StringDecorator(this, "notes", "Notes")));
+Appointment::Appointment(QObject* parent)
+    : Entity(parent, "address")
+{
+    startAt = static_cast<DateTimeDecorator*>(addDataItem(new DateTimeDecorator(this, "startAt", "Start")));
+    endAt = static_cast<DateTimeDecorator*>(addDataItem(new DateTimeDecorator(this, "endAt", "End")));
+    notes = static_cast<StringDecorator*>(addDataItem(new StringDecorator(this, "notes", "Notes")));
 }
 
-Appointment::Appointment(QObject* parent, const QJsonObject& json): Appointment(parent) {
+Appointment::Appointment(QObject* parent, const QJsonObject& json)
+    : Appointment(parent)
+{
     update(json);
 }
 

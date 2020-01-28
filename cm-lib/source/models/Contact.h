@@ -7,6 +7,7 @@
 #include "data/Entity.h"
 #include "data/StringDecorator.h"
 #include "data/EnumeratorDecorator.h"
+#include "data/DropDown.h"
 #include "cm-lib_global.h"
 
 namespace cm {
@@ -15,31 +16,27 @@ namespace models {
 class CMLIB_EXPORT Contact : public data::Entity
 {
     Q_OBJECT
-    Q_PROPERTY(data::EnumeratorDecorator* ui_contactType MEMBER contactType CONSTANT)
-    Q_PROPERTY(data::StringDecorator* ui_address MEMBER address CONSTANT)
-public:
-    explicit Contact(QObject *parent = nullptr);
-    Contact(QObject* parent, const QJsonObject& json);
+    Q_PROPERTY(cm::data::EnumeratorDecorator* ui_contactType MEMBER contactType CONSTANT)
+    Q_PROPERTY(cm::data::StringDecorator* ui_address MEMBER address CONSTANT)
+    Q_PROPERTY(cm::data::DropDown* ui_contactTypeDropDown MEMBER contactTypeDropDown CONSTANT)
 
-    enum ContactType {
+public:
+    enum eContactType {
         Unknown = 0,
         Telephone,
         Email,
         Fax
     };
 
-    data::EnumeratorDecorator* contactType{};
-    data::StringDecorator* address{};
+public:
+    explicit Contact(QObject* parent = nullptr);
+    Contact(QObject* parent, const QJsonObject& json);
 
-private:
-    static const QHash<ContactType, QString> contactTypeMapper;
-};
+    data::EnumeratorDecorator* contactType{nullptr};
+    data::StringDecorator* address{nullptr};
+    data::DropDown* contactTypeDropDown{nullptr};
 
-const QHash<Contact::ContactType, QString> Contact::contactTypeMapper = QHash<Contact::ContactType, QString>{
-    { Contact::ContactType::Unknown, "" },
-    { Contact::ContactType::Telephone, "Telephone" },
-    { Contact::ContactType::Email, "Email" },
-    { Contact::ContactType::Fax, "Fac" }
+    static std::map<int, QString> contactTypeMapper;
 };
 
 

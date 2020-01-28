@@ -23,8 +23,9 @@ class CMLIB_EXPORT Client: public data::Entity
     Q_PROPERTY(cm::data::StringDecorator* ui_name MEMBER name CONSTANT)
     Q_PROPERTY(cm::models::Address* ui_supplyAddress MEMBER supplyAddress CONSTANT)
     Q_PROPERTY(cm::models::Address* ui_billingAddress MEMBER billingAddress CONSTANT)
-    Q_PROPERTY(QQmlListProperty<Appointment> ui_appointments READ ui_appointments NOTIFY appointmentsChanged)
-    Q_PROPERTY(QQmlListProperty<Contact> ui_contacts READ ui_contacts NOTIFY contactsChanged)
+    Q_PROPERTY(QQmlListProperty<cm::models::Appointment> ui_appointments READ ui_appointments NOTIFY appointmentsChanged)
+    Q_PROPERTY(QQmlListProperty<cm::models::Contact> ui_contacts READ ui_contacts NOTIFY contactsChanged)
+
 public:
     explicit Client(QObject* parent = nullptr);
     Client(QObject* parent, const QJsonObject& json);
@@ -37,8 +38,10 @@ public:
     data::EntityCollection<Contact>* contacts{nullptr};
 
     QQmlListProperty<cm::models::Appointment> ui_appointments();
-    QQmlListProperty<cm::models::Contact>ui_contacts();
+    QQmlListProperty<cm::models::Contact> ui_contacts();
 
+public slots:
+    void addContact();
 signals:
     void appointmentsChanged();
     void contactsChanged();

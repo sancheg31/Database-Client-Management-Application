@@ -1,42 +1,39 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Controls 2.2
+import CM 1.0
 import "../assets"
 import "../components"
 
 Window {
     visible: true
-    width: 640
-    height: 480
+    width: 1920
+    height: 1080
     title: qsTr("Client Management")
+
+    Component.onCompleted: contentFrame.replace("qrc:/views/DashboardView.qml");
 
     Connections {
         target: masterController.ui_navigationController
-        onCreateClientView: contentFrame.replace("qrc:/views/CreateClientView.qml")
+        onGoCreateClientView: contentFrame.replace("qrc:/views/CreateClientView.qml")
         onGoDashboardView: contentFrame.replace("qrc:/views/DashboardView.qml")
-        onGoEditClientView: contentFrame.replace("qrc:/views/EditClientView.qml", {selectedClient: client })
+        onGoEditClientView: contentFrame.replace("qrc:/views/EditClientView.qml", {selectedClient: client})
         onGoFindClientView: contentFrame.replace("qrc:/views/FindClientView.qml")
-    }
-
-
-    StackView {
-        clip: true
-        id: contentFrame
-        width: parent.width
-        height: parent.height
-        anchors {
-            top: parent.top
-            bottom: parent.bottom
-            right: parent.right
-            left: navigationBar.left
-        }
-        initialItem: Qt.resolvedUrl("qrc:/views/SplashView.qml")
     }
 
     NavigationBar {
         id: navigationBar
-        isCollapsed: true
     }
 
-
+    StackView {
+        id: contentFrame
+        anchors {
+            top: parent.top
+            bottom: parent.bottom
+            right: parent.right
+            left: navigationBar.right
+        }
+        initialItem: "qrc:/views/SplashView.qml"
+        clip: true
+    }
 }

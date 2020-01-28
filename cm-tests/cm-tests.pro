@@ -18,5 +18,21 @@ CONFIG += c++17
 TEMPLATE = app
 
 INCLUDEPATH += source
+INCLUDEPATH += ../cm-lib/source
 
-SOURCES +=  source/models/tst_clientstests.cpp
+LIBS += -L$$PWD/../binaries/$$DESTINATION_PATH -lcm-lib
+
+HEADERS += source/TestSuite.h \
+    source/controllers/MasterControllerTests.h \
+    source/data/DateTimeDecoratorTests.h \
+    source/data/IntDecoratorTests.h \
+    source/data/StringDecoratorTests.h \
+    source/models/ClientTests.h
+
+SOURCES += source/main.cpp \
+            source/TestSuite.cpp \
+            source/controllers/MasterControllerTests.cpp \
+            source/data/DateTimeDecoratorTests.cpp \
+            source/data/IntDecoratorTests.cpp \
+            source/data/StringDecoratorTests.cpp \
+            source/models/ClientTests.cpp

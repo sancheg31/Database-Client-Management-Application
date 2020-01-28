@@ -1,17 +1,30 @@
 #include "Contact.h"
 
+using namespace cm::data;
+
 namespace cm {
 namespace models {
 
-Contact::Contact(QObject* parent): Entity(parent) {
-    contactType = static_cast<data::EnumeratorDecorator*>(addDataItem(new data::EnumeratorDecorator(this, "contactType", "ContactType")));
-    address = static_cast<data::StringDecorator*>(addDataItem(new data::StringDecorator(this, "address", "Address")));
+std::map<int, QString> Contact::contactTypeMapper = std::map<int, QString> {
+    { Contact::eContactType::Unknown, "" }
+    , { Contact::eContactType::Telephone, "Telephone" }
+    , { Contact::eContactType::Email, "Email" }
+    , { Contact::eContactType::Fax, "Fax" }
+};
+
+Contact::Contact(QObject* parent)
+    : Entity(parent, "contact")
+{
+    contactType = static_cast<EnumeratorDecorator*>(addDataItem(new EnumeratorDecorator(this, "contactType", "Contact Type", 0, contactTypeMapper)));
+    address = static_cast<StringDecorator*>(addDataItem(new StringDecorator(this, "address", "Address")));
+    contactTypeDropDown = new DropDown(this, contactTypeMapper);
 }
 
-Contact::Contact(QObject* parent, const QJsonObject& json): Contact(parent) {
+Contact::Contact(QObject* parent, const QJsonObject& json)
+    : Contact(parent)
+{
     update(json);
 }
-
 
 } //models
 } //cm

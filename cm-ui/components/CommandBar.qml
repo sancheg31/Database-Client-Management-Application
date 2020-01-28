@@ -13,13 +13,13 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        color: Style.colorCommandBarBackground
+        color: Style.colourCommandBarBackground
 
         Row {
             anchors {
                 top: parent.top
                 bottom: parent.bottom
-                right: parent.right
+                left: parent.left
             }
 
             Repeater {

@@ -4,30 +4,43 @@
 namespace cm {
 namespace framework {
 
-class Command::Implementation {
+class Command::Implementation
+{
 public:
-    Implementation(const QString& icon, const QString& desc, std::function<bool()> canExec):
-        iconCharacter(icon), description(desc), canExecute(canExec) { }
+    Implementation(const QString& _iconCharacter, const QString& _description, std::function<bool()> _canExecute)
+        : iconCharacter(_iconCharacter)
+        , description(_description)
+        , canExecute(_canExecute)
+    {
+    }
+
     QString iconCharacter;
     QString description;
     std::function<bool()> canExecute;
 };
 
-Command::Command(QObject* parent, const QString& icon, const QString& desc, std::function<bool()> canExec): QObject(parent) {
-    impl.reset(new Implementation(icon, desc, canExec));
+Command::Command(QObject* parent, const QString& iconCharacter, const QString& description, std::function<bool()> canExecute)
+    : QObject(parent)
+{
+    impl.reset(new Implementation(iconCharacter, description, canExecute));
 }
 
-Command::~Command() { }
+Command::~Command()
+{
+}
 
-const QString& Command::iconCharacter() const {
+const QString& Command::iconCharacter() const
+{
     return impl->iconCharacter;
 }
 
-const QString& Command::description() const {
+const QString& Command::description() const
+{
     return impl->description;
 }
 
-bool Command::canExecute() const {
+bool Command::canExecute() const
+{
     return impl->canExecute();
 }
 

@@ -3,17 +3,14 @@ import CM 1.0
 import "../assets"
 
 Item {
-
     property Command command
-    property color fontColor: command.ui_canExecute ? Style.colorCommandBarFont : Style.colorCommandBarFontDisabled
     width: Style.widthCommandButton
     height: Style.heightCommandButton
-
 
     Rectangle {
         id: background
         anchors.fill: parent
-        color: Style.colorNavigationBarBackground
+        color: Style.colourCommandBarBackground
 
         Text {
             id: textIcon
@@ -25,10 +22,9 @@ Item {
                 family: Style.fontAwesome
                 pixelSize: Style.pixelSizeCommandBarIcon
             }
-
-            color: fontColor
+            color: command.ui_canExecute ? Style.colourCommandBarFont : colourCommandBarFontDisabled
             text: command.ui_iconCharacter
-            verticalAlignment: Text.AlignHCenter
+            horizontalAlignment: Text.AlignHCenter
         }
 
         Text {
@@ -39,11 +35,8 @@ Item {
                 left: parent.left
                 right: parent.right
             }
-            font {
-                family: Style.fontAwesome
-                pixelSize: Style.pixelSizeCommandBarDescription
-            }
-            color: fontColor
+            font.pixelSize: Style.pixelSizeNavigationBarText
+            color: command.ui_canExecute ? Style.colourCommandBarFont : colourCommandBarFontDisabled
             text: command.ui_description
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
@@ -51,12 +44,11 @@ Item {
 
         MouseArea {
             anchors.fill: parent
-            width: parent.width
-            height: parent.height
+            cursorShape: Qt.PointingHandCursor
             hoverEnabled: true
             onEntered: background.state = "hover"
             onExited: background.state = ""
-            onClicked: if (command.ui_canExecute) {
+            onClicked: if(command.ui_canExecute) {
                            command.executed();
                        }
         }
@@ -66,10 +58,9 @@ Item {
                 name: "hover"
                 PropertyChanges {
                     target: background
-                    color: Qt.darker(Style.colorCommandBarBackground)
+                    color: Qt.darker(Style.colourCommandBarBackground)
                 }
             }
-
         ]
     }
 }

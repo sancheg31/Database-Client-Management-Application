@@ -5,5 +5,14 @@
         <file alias="NavigationBar.qml">components/NavigationBar.qml</file>
         <file alias="CommandButton.qml">components/CommandButton.qml</file>
         <file alias="CommandBar.qml">components/CommandBar.qml</file>
+        <file alias="StringEditorSingleLine.qml">components/StringEditorSingleLine.qml</file>
+        <file alias="Panel.qml">components/Panel.qml</file>
+        <file alias="AddressEditor.qml">components/AddressEditor.qml</file>
+        <file alias="SearchResultDelegate.qml">components/SearchResultDelegate.qml</file>
+        <file alias="ContactEditor.qml">components/ContactEditor.qml</file>
+        <file alias="ContactDelegate.qml">components/ContactDelegate.qml</file>
+        <file alias="EnumeratorSelector.qml">components/EnumeratorSelector.qml</file>
+        <file alias="FormButton.qml">components/FormButton.qml</file>
+        <file alias = "EnumeratorSelectorView.qml">components/EnumeratorSelectorView.qml</file>
     </qresource>
 </RCC>

@@ -7,14 +7,15 @@
 namespace cm {
 namespace controllers {
 
-class CMLIB_EXPORT NavigationController: public QObject
+class CMLIB_EXPORT NavigationController : public QObject
 {
     Q_OBJECT
+
 public:
-    explicit NavigationController(QObject* parent = nullptr): QObject(parent) { }
+    explicit NavigationController(QObject* parent = nullptr) : QObject(parent){}
 
 signals:
-    void createClientView();
+    void goCreateClientView();
     void goDashboardView();
     void goEditClientView(cm::models::Client* client);
     void goFindClientView();

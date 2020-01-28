@@ -11,7 +11,7 @@
 namespace cm {
 namespace data {
 
-class IntDecorator : public cm::data::DataDecorator
+class CMLIB_EXPORT IntDecorator : public cm::data::DataDecorator
 {
     Q_OBJECT
     Q_PROPERTY(int ui_value READ value WRITE setValue NOTIFY valueChanged)

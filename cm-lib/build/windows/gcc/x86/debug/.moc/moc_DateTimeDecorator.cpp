@@ -6,7 +6,7 @@
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "../../../../../../data/DateTimeDecorator.h"
+#include "../../../../../../source/data/DateTimeDecorator.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
@@ -34,17 +34,17 @@ static const qt_meta_stringdata_cm__data__DateTimeDecorator_t qt_meta_stringdata
 QT_MOC_LITERAL(0, 0, 27), // "cm::data::DateTimeDecorator"
 QT_MOC_LITERAL(1, 28, 12), // "valueChanged"
 QT_MOC_LITERAL(2, 41, 0), // ""
-QT_MOC_LITERAL(3, 42, 8), // "ui_value"
-QT_MOC_LITERAL(4, 51, 16), // "ui_iso8601String"
-QT_MOC_LITERAL(5, 68, 19), // "ui_prettyDateString"
-QT_MOC_LITERAL(6, 88, 19), // "ui_prettyTimeString"
-QT_MOC_LITERAL(7, 108, 15) // "ui_prettyString"
+QT_MOC_LITERAL(3, 42, 16), // "ui_iso8601String"
+QT_MOC_LITERAL(4, 59, 19), // "ui_prettyDateString"
+QT_MOC_LITERAL(5, 79, 19), // "ui_prettyTimeString"
+QT_MOC_LITERAL(6, 99, 15), // "ui_prettyString"
+QT_MOC_LITERAL(7, 115, 8) // "ui_value"
 
     },
     "cm::data::DateTimeDecorator\0valueChanged\0"
-    "\0ui_value\0ui_iso8601String\0"
-    "ui_prettyDateString\0ui_prettyTimeString\0"
-    "ui_prettyString"
+    "\0ui_iso8601String\0ui_prettyDateString\0"
+    "ui_prettyTimeString\0ui_prettyString\0"
+    "ui_value"
 };
 #undef QT_MOC_LITERAL
 
@@ -68,11 +68,11 @@ static const uint qt_meta_data_cm__data__DateTimeDecorator[] = {
     QMetaType::Void,
 
  // properties: name, type, flags
-       3, QMetaType::QDateTime, 0x00495003,
+       3, QMetaType::QString, 0x00495001,
        4, QMetaType::QString, 0x00495001,
        5, QMetaType::QString, 0x00495001,
        6, QMetaType::QString, 0x00495001,
-       7, QMetaType::QString, 0x00495001,
+       7, QMetaType::QDateTime, 0x00495003,
 
  // properties: notify_signal_id
        0,
@@ -109,11 +109,11 @@ void cm::data::DateTimeDecorator::qt_static_metacall(QObject *_o, QMetaObject::C
         Q_UNUSED(_t)
         void *_v = _a[0];
         switch (_id) {
-        case 0: *reinterpret_cast< QDateTime*>(_v) = _t->value(); break;
-        case 1: *reinterpret_cast< QString*>(_v) = _t->toIso8601String(); break;
-        case 2: *reinterpret_cast< QString*>(_v) = _t->toPrettyDateString(); break;
-        case 3: *reinterpret_cast< QString*>(_v) = _t->toPrettyTimeString(); break;
-        case 4: *reinterpret_cast< QString*>(_v) = _t->toPrettyString(); break;
+        case 0: *reinterpret_cast< QString*>(_v) = _t->toIso8601String(); break;
+        case 1: *reinterpret_cast< QString*>(_v) = _t->toPrettyDateString(); break;
+        case 2: *reinterpret_cast< QString*>(_v) = _t->toPrettyTimeString(); break;
+        case 3: *reinterpret_cast< QString*>(_v) = _t->toPrettyString(); break;
+        case 4: *reinterpret_cast< QDateTime*>(_v) = _t->value(); break;
         default: break;
         }
     } else if (_c == QMetaObject::WriteProperty) {
@@ -121,7 +121,7 @@ void cm::data::DateTimeDecorator::qt_static_metacall(QObject *_o, QMetaObject::C
         Q_UNUSED(_t)
         void *_v = _a[0];
         switch (_id) {
-        case 0: _t->setValue(*reinterpret_cast< QDateTime*>(_v)); break;
+        case 4: _t->setValue(*reinterpret_cast< QDateTime*>(_v)); break;
         default: break;
         }
     } else if (_c == QMetaObject::ResetProperty) {
@@ -131,7 +131,7 @@ void cm::data::DateTimeDecorator::qt_static_metacall(QObject *_o, QMetaObject::C
 }
 
 QT_INIT_METAOBJECT const QMetaObject cm::data::DateTimeDecorator::staticMetaObject = { {
-    &cm::data::DataDecorator::staticMetaObject,
+    &DataDecorator::staticMetaObject,
     qt_meta_stringdata_cm__data__DateTimeDecorator.data,
     qt_meta_data_cm__data__DateTimeDecorator,
     qt_static_metacall,
@@ -150,12 +150,12 @@ void *cm::data::DateTimeDecorator::qt_metacast(const char *_clname)
     if (!_clname) return nullptr;
     if (!strcmp(_clname, qt_meta_stringdata_cm__data__DateTimeDecorator.stringdata0))
         return static_cast<void*>(this);
-    return cm::data::DataDecorator::qt_metacast(_clname);
+    return DataDecorator::qt_metacast(_clname);
 }
 
 int cm::data::DateTimeDecorator::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = cm::data::DataDecorator::qt_metacall(_c, _id, _a);
+    _id = DataDecorator::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {

@@ -9,25 +9,27 @@ namespace data {
 class DateTimeDecorator::Implementation
 {
 public:
-    Implementation(DateTimeDecorator* p, const QDateTime& dt = QDateTime{}):
-        parentEntity(p), value(dt) { }
-    DateTimeDecorator* parentEntity;
+    Implementation(DateTimeDecorator* dateTimeDecorator, const QDateTime& value)
+        : dateTimeDecorator(dateTimeDecorator), value(value) { }
+
+    DateTimeDecorator* dateTimeDecorator{nullptr};
     QDateTime value;
 };
 
-DateTimeDecorator::DateTimeDecorator(Entity* parent, const QString& key, const QString& label, const QDateTime& value):
-    DataDecorator(parent, key, label) {
+DateTimeDecorator::DateTimeDecorator(Entity* parentEntity, const QString& key, const QString& label, const QDateTime& value)
+    : DataDecorator(parentEntity, key, label) {
     impl.reset(new Implementation(this, value));
 }
 
-DateTimeDecorator::~DateTimeDecorator() {}
+DateTimeDecorator::~DateTimeDecorator() { }
 
-QDateTime DateTimeDecorator::value() const {
+const QDateTime& DateTimeDecorator::value() const {
     return impl->value;
 }
 
-DateTimeDecorator& DateTimeDecorator::setValue(QDateTime value) {
-    if (value != impl->value) {
+DateTimeDecorator& DateTimeDecorator::setValue(const QDateTime& value) {
+    if(value != impl->value) {
+        // ...Validation here if required...
         impl->value = value;
         emit valueChanged();
     }
@@ -35,39 +37,48 @@ DateTimeDecorator& DateTimeDecorator::setValue(QDateTime value) {
 }
 
 QString DateTimeDecorator::toIso8601String() const {
-    if (impl->value.isNull())
+    if (impl->value.isNull()) {
         return "";
-    else
+    } else {
         return impl->value.toString(Qt::ISODate);
-}
-
-QString DateTimeDecorator::toPrettyDateString() const {
-    if (impl->value.isNull())
-        return"Not Set";
-    return impl->value.toString("d MMM yyyy");
-}
-
-QString DateTimeDecorator::toPrettyTimeString() const {
-    if (impl->value.isNull())
-        return "Not Set";
-    return impl->value.toString("hh:mm ap");
+    }
 }
 
 QString DateTimeDecorator::toPrettyString() const {
-    if (impl->value.isNull())
-        return "Not Set";
-    return impl->value.toString("dddd MMM yyyy @ HH:mm:ss");
+    if (impl->value.isNull()) {
+        return "Not set";
+    } else {
+        return impl->value.toString( "ddd d MMM yyyy @ HH:mm:ss" );
+    }
+}
+
+QString DateTimeDecorator::toPrettyDateString() const {
+    if (impl->value.isNull()) {
+        return "Not set";
+    } else {
+        return impl->value.toString( "d MMM yyyy" );
+    }
+}
+
+QString DateTimeDecorator::toPrettyTimeString() const {
+    if (impl->value.isNull()) {
+        return "Not set";
+    } else {
+        return impl->value.toString( "hh:mm ap" );
+    }
 }
 
 QJsonValue DateTimeDecorator::jsonValue() const {
-    return QJsonValue::fromVariant(QVariant(impl->value));
+    return QJsonValue::fromVariant(QVariant(impl->value.toString(Qt::ISODate)));
 }
 
 void DateTimeDecorator::update(const QJsonObject& jsonObject) {
     if (jsonObject.contains(key())) {
-        setValue(jsonObject.value(key()).toVariant().toDateTime());
+        auto valueAsString = jsonObject.value(key()).toString();
+        auto valueAsDate = QDateTime::fromString(valueAsString, Qt::ISODate);  // yyyy-MM-ddTHH:mm:ss
+        setValue(valueAsDate);
     } else {
-        setValue(QDateTime{});
+        setValue(QDateTime());
     }
 }
 

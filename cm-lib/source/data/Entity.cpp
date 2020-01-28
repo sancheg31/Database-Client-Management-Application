@@ -1,5 +1,10 @@
 #include "Entity.h"
 
+#include <QUuid>
+#include "controllers/IDataBaseController.h"
+#include "controllers/DatabaseController.h"
+
+using namespace cm::controllers;
 
 namespace cm {
 namespace data {
@@ -7,76 +12,133 @@ namespace data {
 class Entity::Implementation
 {
 public:
-    Implementation(Entity* en, const QString& k): entity(en), key(k) { }
+    Implementation(Entity* _entity, const QString& _key)
+        : entity(_entity)
+        , key(_key)
+        , id(QUuid::createUuid().toString())
+    {
+    }
     Entity* entity{nullptr};
     QString key;
-    QHash<QString, Entity*> childEntities;
-    QHash<QString, DataDecorator*> dataDecorators;
-    QHash<QString, EntityCollectionBase*> childCollections;
+    QString id;
+    StringDecorator* primaryKey{nullptr};
+    std::map<QString, EntityCollectionBase*> childCollections;
+    std::map<QString, Entity*> childEntities;
+    std::map<QString, DataDecorator*> dataDecorators;
 };
 
-Entity::Entity(QObject* parent, const QString& key): QObject(parent) {
+Entity::Entity(QObject* parent, const QString& key)
+    : QObject(parent)
+{
     impl.reset(new Implementation(this, key));
 }
 
-Entity::Entity(QObject* parent, const QString& key, const QJsonObject& jsonObject): Entity(parent, key) {
+Entity::Entity(QObject* parent, const QString& key, const QJsonObject& jsonObject)
+    : Entity(parent, key)
+{
     update(jsonObject);
 }
 
-Entity::~Entity() { }
+Entity::~Entity()
+{
+}
 
-const QString& Entity::key() const {
+const QString& Entity::id() const
+{
+    if(impl->primaryKey != nullptr && !impl->primaryKey->value().isEmpty()) {
+        return impl->primaryKey->value();
+    }
+
+    return impl->id;
+}
+
+const QString& Entity::key() const
+{
     return impl->key;
 }
 
-Entity* Entity::addChild(Entity* entity, const QString& key) {
-    if (impl->childEntities.contains(key)) {
-        impl->childEntities.insert(key, entity);
+void Entity::setPrimaryKey(StringDecorator* primaryKey)
+{
+    impl->primaryKey = primaryKey;
+}
+
+Entity* Entity::addChild(Entity* entity, const QString& key)
+{
+    if(impl->childEntities.find(key) == std::end(impl->childEntities)) {
+        impl->childEntities[key] = entity;
         emit childEntitiesChanged();
     }
+
     return entity;
 }
 
-DataDecorator* Entity::addDataItem(DataDecorator *data) {
-    if (impl->dataDecorators.contains(data->key())) {
-        impl->dataDecorators.insert(data->key(), data);
-        emit dataDecoratorsChanged();
+EntityCollectionBase* Entity::addChildCollection(EntityCollectionBase* entityCollection)
+{
+    if(impl->childCollections.find(entityCollection->getKey()) == std::end(impl->childCollections)) {
+        impl->childCollections[entityCollection->getKey()] = entityCollection;
+        emit childCollectionsChanged(entityCollection->getKey());
     }
-    return data;
-}
 
-EntityCollectionBase* Entity::addChildCollection(EntityCollectionBase* entityCollection) {
-    if (impl->childCollections.contains(entityCollection->key())) {
-        impl->childCollections.insert(entityCollection->key(), entityCollection);
-        emit childCollectionChanged(entityCollection->key());
-    }
     return entityCollection;
 }
 
-void Entity::update(const QJsonObject& jsonObject) {
-    for (auto & data: impl->dataDecorators)
-        data->update(jsonObject);
-    for (auto & entity: impl->childEntities)
-        entity->update(jsonObject);
-    for (auto & collection: impl->childCollections)
-        collection->update(jsonObject.value(collection->key()).toArray());
+DataDecorator* Entity::addDataItem(DataDecorator* dataDecorator)
+{
+    if(impl->dataDecorators.find(dataDecorator->key()) == std::end(impl->dataDecorators)) {
+        impl->dataDecorators[dataDecorator->key()] = dataDecorator;
+        emit dataDecoratorsChanged();
+    }
+
+    return dataDecorator;
 }
 
-QJsonObject Entity::toJson() const {
-    QJsonObject result;
-    for (auto & data: impl->dataDecorators) {
-        result.insert(data->key(), data->jsonValue());
+void Entity::update(const QJsonObject& jsonObject)
+{
+    if (jsonObject.contains("id")) {
+        impl->id = jsonObject.value("id").toString();
     }
-    for (auto & entity: impl->childEntities) {
-        result.insert(entity->key(), entity->toJson());
+
+    // Update data decorators
+    for (std::pair<QString, DataDecorator*> dataDecoratorPair : impl->dataDecorators) {
+        dataDecoratorPair.second->update(jsonObject);
     }
-    for (auto & collection: impl->childCollections) {
-        QJsonArray arr;
-        for (auto & entity: collection->baseEntities())
-            arr.append(entity->toJson());
-        result.insert(collection->key(), arr);
+
+    // Update child entities
+    for (std::pair<QString, Entity*> childEntityPair : impl->childEntities) {
+        childEntityPair.second->update(jsonObject.value(childEntityPair.first).toObject());
     }
-    return result;
+
+    // Update child collections
+    for (std::pair<QString, EntityCollectionBase*> childCollectionPair : impl->childCollections) {
+        childCollectionPair.second->update(jsonObject.value(childCollectionPair.first).toArray());
+    }
+}
+
+QJsonObject Entity::toJson() const
+{
+    QJsonObject returnValue;
+    returnValue.insert("id", impl->id);
+
+    // Add data decorators
+    for (std::pair<QString, DataDecorator*> dataDecoratorPair : impl->dataDecorators) {
+        returnValue.insert( dataDecoratorPair.first, dataDecoratorPair.second->jsonValue() );
+    }
+
+    // Add child entities
+    for (std::pair<QString, Entity*> childEntityPair : impl->childEntities) {
+        returnValue.insert( childEntityPair.first, childEntityPair.second->toJson() );
+    }
+
+    // Add child collections
+    for (std::pair<QString, EntityCollectionBase*> childCollectionPair : impl->childCollections) {
+        QJsonArray entityArray;
+            for (Entity* entity : childCollectionPair.second->baseEntities()) {
+            entityArray.append( entity->toJson() );
+        }
+        returnValue.insert( childCollectionPair.first, entityArray );
+    }
+
+    return returnValue;
 }
 
 

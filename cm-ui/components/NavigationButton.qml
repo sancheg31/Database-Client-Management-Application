@@ -6,72 +6,60 @@ import "../assets"
 Item {
     property alias iconCharacter: textIcon.text
     property alias description: textDescription.text
-    property color hoverColor: Style.colorNavigationBarBackground
-    property real currentWidth: Style.widthNavigationButton
-    property real currentHeight: Style.heightNavigationButton
-
-    property bool isDescriptionVisible: true
-    property bool isIconVisible: true
+    property color hoverColour: Style.colourNavigationBarBackground
 
     signal navigationButtonClicked()
 
-    width: currentWidth
-    height: currentHeight
+    width: parent.width
+    height: Style.heightNavigationButton
 
     Rectangle {
         id: background
         anchors.fill: parent
-        color: Style.colorNavigationBarBackground
-
-        states: [
-            State {
-                name: "hover"
-                PropertyChanges {
-                    target: background
-                    color: hoverColor
-                }
-            }
-        ]
+        color: Style.colourNavigationBarBackground
 
         Row {
             Text {
                 id: textIcon
                 width: Style.widthNavigationButtonIcon
                 height: Style.heightNavigationButtonIcon
-
                 font {
                     family: Style.fontAwesome
                     pixelSize: Style.pixelSizeNavigationBarIcon
                 }
-                color: Style.colorNavigationBarFont
+                color: Style.colourNavigationBarFont
+                text: "\uf11a"
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
-                visible: isIconVisible
-                text: "\uf11a"
             }
             Text {
                 id: textDescription
                 width: Style.widthNavigationButtonDescription
                 height: Style.heightNavigationButtonDescription
-                color: Style.colorNavigationBarFont
+                color: Style.colourNavigationBarFont
+                text: "SET ME!!"
                 verticalAlignment: Text.AlignVCenter
-                visible: isDescriptionVisible
-                text: "Default Text"
-                font {
-                    pixelSize: Style.pixelSizeNavigationBarDescription
-                }
+                font.pixelSize: Style.pixelSizeNavigationBarText
             }
         }
 
         MouseArea {
             anchors.fill: parent
-            width: parent.width
-            height: parent.height
             cursorShape: Qt.PointingHandCursor
             hoverEnabled: true
             onEntered: background.state = "hover"
             onExited: background.state = ""
             onClicked: navigationButtonClicked()
         }
+
+        states: [
+            State {
+                name: "hover"
+                PropertyChanges {
+                    target: background
+                    color: hoverColour
+                }
+            }
+        ]
     }
 }

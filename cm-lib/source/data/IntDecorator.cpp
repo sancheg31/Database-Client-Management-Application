@@ -26,7 +26,7 @@ int IntDecorator::value() const {
 }
 
 IntDecorator& IntDecorator::setValue(int value) {
-    if (value == impl->value) {
+    if (value != impl->value) {
         impl->value = value;
         emit valueChanged();
     }

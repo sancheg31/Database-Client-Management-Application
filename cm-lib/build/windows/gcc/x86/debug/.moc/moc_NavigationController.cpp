@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_cm__controllers__NavigationController_t {
     QByteArrayData data[8];
-    char stringdata0[133];
+    char stringdata0[135];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -32,17 +32,17 @@ struct qt_meta_stringdata_cm__controllers__NavigationController_t {
 static const qt_meta_stringdata_cm__controllers__NavigationController_t qt_meta_stringdata_cm__controllers__NavigationController = {
     {
 QT_MOC_LITERAL(0, 0, 37), // "cm::controllers::NavigationCo..."
-QT_MOC_LITERAL(1, 38, 16), // "createClientView"
-QT_MOC_LITERAL(2, 55, 0), // ""
-QT_MOC_LITERAL(3, 56, 15), // "goDashboardView"
-QT_MOC_LITERAL(4, 72, 16), // "goEditClientView"
-QT_MOC_LITERAL(5, 89, 19), // "cm::models::Client*"
-QT_MOC_LITERAL(6, 109, 6), // "client"
-QT_MOC_LITERAL(7, 116, 16) // "goFindClientView"
+QT_MOC_LITERAL(1, 38, 18), // "goCreateClientView"
+QT_MOC_LITERAL(2, 57, 0), // ""
+QT_MOC_LITERAL(3, 58, 15), // "goDashboardView"
+QT_MOC_LITERAL(4, 74, 16), // "goEditClientView"
+QT_MOC_LITERAL(5, 91, 19), // "cm::models::Client*"
+QT_MOC_LITERAL(6, 111, 6), // "client"
+QT_MOC_LITERAL(7, 118, 16) // "goFindClientView"
 
     },
     "cm::controllers::NavigationController\0"
-    "createClientView\0\0goDashboardView\0"
+    "goCreateClientView\0\0goDashboardView\0"
     "goEditClientView\0cm::models::Client*\0"
     "client\0goFindClientView"
 };
@@ -82,17 +82,28 @@ void cm::controllers::NavigationController::qt_static_metacall(QObject *_o, QMet
         auto *_t = static_cast<NavigationController *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->createClientView(); break;
+        case 0: _t->goCreateClientView(); break;
         case 1: _t->goDashboardView(); break;
         case 2: _t->goEditClientView((*reinterpret_cast< cm::models::Client*(*)>(_a[1]))); break;
         case 3: _t->goFindClientView(); break;
         default: ;
         }
+    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        switch (_id) {
+        default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+        case 2:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 0:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< cm::models::Client* >(); break;
+            }
+            break;
+        }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
             using _t = void (NavigationController::*)();
-            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&NavigationController::createClientView)) {
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&NavigationController::goCreateClientView)) {
                 *result = 0;
                 return;
             }
@@ -155,14 +166,14 @@ int cm::controllers::NavigationController::qt_metacall(QMetaObject::Call _c, int
         _id -= 4;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
         if (_id < 4)
-            *reinterpret_cast<int*>(_a[0]) = -1;
+            qt_static_metacall(this, _c, _id, _a);
         _id -= 4;
     }
     return _id;
 }
 
 // SIGNAL 0
-void cm::controllers::NavigationController::createClientView()
+void cm::controllers::NavigationController::goCreateClientView()
 {
     QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
 }

@@ -8,46 +8,63 @@ namespace data {
 class EnumeratorDecorator::Implementation
 {
 public:
-    Implementation(EnumeratorDecorator* parent, int v,  const QHash<int, QString>& mapper = {}):
-        parentEntity(parent), value(v), descriptionMapper(mapper) { }
-    EnumeratorDecorator* parentEntity;
+    Implementation(EnumeratorDecorator* enumeratorDecorator, int value, const std::map<int, QString>& descriptionMapper)
+        : enumeratorDecorator(enumeratorDecorator)
+        , value(value)
+        , descriptionMapper(descriptionMapper)
+    {
+    }
+
+    EnumeratorDecorator* enumeratorDecorator{nullptr};
     int value;
-    QHash<int, QString> descriptionMapper;
+    std::map<int, QString> descriptionMapper;
 };
 
-EnumeratorDecorator::EnumeratorDecorator(Entity* parent, const QString& key, const QString& label,
-                                         int value,  const QHash<int, QString>& mapper):
-    cm::data::DataDecorator(parent, key, label) {
-    impl.reset(new Implementation(this, value, mapper));
+EnumeratorDecorator::EnumeratorDecorator(Entity* parentEntity, const QString& key, const QString& label, int value, const std::map<int, QString>& descriptionMapper)
+    : DataDecorator(parentEntity, key, label)
+{
+    implementation.reset(new Implementation(this, value, descriptionMapper));
 }
 
-EnumeratorDecorator::~EnumeratorDecorator() { }
-
-int EnumeratorDecorator::value() const {
-    return impl->value;
+EnumeratorDecorator::~EnumeratorDecorator()
+{
 }
 
-QString EnumeratorDecorator::valueDescription() const {
-    if (impl->descriptionMapper.contains(impl->value))
-        return impl->descriptionMapper[impl->value];
-    return "";
+int EnumeratorDecorator::value() const
+{
+    return implementation->value;
 }
 
-EnumeratorDecorator& EnumeratorDecorator::setValue(int value) {
-    if (value != impl->value) {
-        impl->value = value;
+QString EnumeratorDecorator::valueDescription() const
+{
+    if (implementation->descriptionMapper.find(implementation->value) != implementation->descriptionMapper.end()) {
+        return implementation->descriptionMapper.at(implementation->value);
+    } else {
+        return {};
+    }
+}
+
+EnumeratorDecorator& EnumeratorDecorator::setValue(int value)
+{
+    if (value != implementation->value) {
+        // ...Validation here if required...
+        implementation->value = value;
         emit valueChanged();
     }
+
     return *this;
 }
 
-QJsonValue EnumeratorDecorator::jsonValue() const {
-    return QJsonValue::fromVariant(QVariant(impl->value));
+QJsonValue EnumeratorDecorator::jsonValue() const
+{
+    return QJsonValue::fromVariant(QVariant(implementation->value));
 }
 
-void EnumeratorDecorator::update(const QJsonObject& jsonObject) {
+void EnumeratorDecorator::update(const QJsonObject& jsonObject)
+{
     if (jsonObject.contains(key())) {
-        setValue(jsonObject.value(key()).toInt());
+        auto valueFromJson = jsonObject.value(key()).toInt();
+        setValue(valueFromJson);
     } else {
         setValue(0);
     }

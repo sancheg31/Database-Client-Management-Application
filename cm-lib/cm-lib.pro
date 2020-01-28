@@ -3,6 +3,7 @@ include(../qmake-target-platform.pri)
 include(../qmake-destination-path.pri)
 
 QT -= gui
+QT += sql
 
 TARGET = cm-lib
 TEMPLATE = lib
@@ -21,12 +22,13 @@ DEFINES += CMLIB_LIBRARY
 INCLUDEPATH += source
 
 SOURCES += \
+    source/data/DropDown.cpp \
+    source/controllers/DatabaseController.cpp \
     source/data/DataDecorator.cpp \
     source/data/DateTimeDecorator.cpp \
+    source/data/DropDownValue.cpp \
     source/data/Entity.cpp \
     source/data/EntityCollection.cpp \
-    source/data/EntityCollectionBase.cpp \
-    source/data/EntityCollectionObject.cpp \
     source/data/EnumeratorDecorator.cpp \
     source/data/IntDecorator.cpp \
     source/data/StringDecorator.cpp \
@@ -36,15 +38,18 @@ SOURCES += \
     source/models/Address.cpp \
     source/models/Appointment.cpp \
     source/models/Client.cpp \
+    source/models/ClientSearch.cpp \
     source/models/Contact.cpp
 
 HEADERS += \
+    source/data/DropDown.h \
+    source/controllers/DatabaseController.h \
+    source/controllers/IDatabaseController.h \
     source/data/DataDecorator.h \
     source/data/DateTimeDecorator.h \
+    source/data/DropDownValue.h \
     source/data/Entity.h \
     source/data/EntityCollection.h \
-    source/data/EntityCollectionBase.h \
-    source/data/EntityCollectionObject.h \
     source/data/EnumeratorDecorator.h \
     source/data/IntDecorator.h \
     source/data/StringDecorator.h \
@@ -56,6 +61,7 @@ HEADERS += \
     source/models/Address.h \
     source/models/Appointment.h \
     source/models/Client.h \
+    source/models/ClientSearch.h \
     source/models/Contact.h
 
 TRANSLATIONS += \

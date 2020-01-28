@@ -17,8 +17,7 @@ CONFIG += c++17
 INCLUDEPATH += source
 INCLUDEPATH += views
 INCLUDEPATH += ../cm-lib/source
-SOURCES += \
-        source/main.cpp
+SOURCES += source/main.cpp
 
 LIBS += -L$$PWD/../binaries/$$DESTINATION_PATH -lcm-lib
 
@@ -44,12 +43,21 @@ DISTFILES += \
     assets/Style.qml \
     assets/fontawesome.ttf \
     components.qml \
+    components/AddressEditor.qml \
     components/CommandBar.qml \
+    components/ContactDelegate.qml \
+    components/ContactEditor.qml \
+    components/EnumeratorSelector.qml \
+    components/FormButton.qml \
     components/NavigationBar.qml \
     components/CommandButton.qml \
     components/NavigationButton.qml \
+    components/Panel.qml \
+    components/SearchResultDelegate.qml \
+    components/StringEditorSingleLine.qml \
     views/DashboardView.qml \
     views/EditClientView.qml \
+    components/EnumeratorSelectorView.qml \
     views/FindClientView.qml \
     views/SplashView.qml \
     views/CreateClientView.qml \

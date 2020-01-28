@@ -6,7 +6,7 @@
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "../../../../../../data/EnumeratorDecorator.h"
+#include "../../../../../../source/data/EnumeratorDecorator.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
@@ -117,7 +117,7 @@ void cm::data::EnumeratorDecorator::qt_static_metacall(QObject *_o, QMetaObject:
 }
 
 QT_INIT_METAOBJECT const QMetaObject cm::data::EnumeratorDecorator::staticMetaObject = { {
-    &cm::data::DataDecorator::staticMetaObject,
+    &DataDecorator::staticMetaObject,
     qt_meta_stringdata_cm__data__EnumeratorDecorator.data,
     qt_meta_data_cm__data__EnumeratorDecorator,
     qt_static_metacall,
@@ -136,12 +136,12 @@ void *cm::data::EnumeratorDecorator::qt_metacast(const char *_clname)
     if (!_clname) return nullptr;
     if (!strcmp(_clname, qt_meta_stringdata_cm__data__EnumeratorDecorator.stringdata0))
         return static_cast<void*>(this);
-    return cm::data::DataDecorator::qt_metacast(_clname);
+    return DataDecorator::qt_metacast(_clname);
 }
 
 int cm::data::EnumeratorDecorator::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = cm::data::DataDecorator::qt_metacall(_c, _id, _a);
+    _id = DataDecorator::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
