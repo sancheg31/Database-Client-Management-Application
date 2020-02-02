@@ -26,27 +26,9 @@ Item {
         Column {
             spacing: Style.sizeScreenMargin
             width: scrollView.width
-
-            Panel {
+            ClientEditor {
+                client: newClient
                 headerText: "Client Details"
-                contentComponent:
-                    Column {
-                        spacing: Style.sizeControlSpacing
-                        StringEditorSingleLine {
-                            stringDecorator: newClient.ui_reference
-                            anchors {
-                                left: parent.left
-                                right: parent.right
-                            }
-                        }
-                        StringEditorSingleLine {
-                            stringDecorator: newClient.ui_name
-                            anchors {
-                                left: parent.left
-                                right: parent.right
-                            }
-                        }
-                    }
             }
             AddressEditor {
                 address: newClient.ui_supplyAddress
@@ -57,7 +39,6 @@ Item {
                 headerText: "Billing Address"
             }
             ContactEditor {
-                width: scrollView.width
                 client: newClient
                 headerText: "Contact Details"
             }
