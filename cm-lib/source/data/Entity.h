@@ -23,7 +23,7 @@ class CMLIB_EXPORT Entity : public QObject
     Q_OBJECT
 
 public:
-    Entity(QObject* parent = nullptr, const QString& key = "SomeEntityKey");
+    Entity(QObject* parent = nullptr, const QString& key = "");
     Entity(QObject* parent, const QString& key, const QJsonObject& jsonObject);
     virtual ~Entity();
 

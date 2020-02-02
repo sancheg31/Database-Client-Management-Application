@@ -43,6 +43,5 @@ bool Command::canExecute() const
 {
     return impl->canExecute();
 }
-
 } //framework
 } //cm

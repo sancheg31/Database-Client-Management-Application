@@ -46,13 +46,17 @@ Item {
                 color: Style.colourDataControlsFont
                 font.pixelSize: Style.pixelSizeDataControls
                 verticalAlignment: Qt.AlignVCenter
+
             }
         }
+
+
 
         Binding {
             target: stringDecorator
             property: "ui_value"
             value: textValue.text
         }
+
     }
 }

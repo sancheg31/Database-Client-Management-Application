@@ -37,6 +37,17 @@ void Client::addContact() {
     contacts->addEntity(new Contact(this));
     emit contactsChanged();
 }
+
+void Client::setDefault()
+{
+    reference->setValue("");
+    name->setValue("");
+    supplyAddress = static_cast<Address*>(addChild(new Address(this), "supplyAddress"));
+    billingAddress = static_cast<Address*>(addChild(new Address(this), "billingAddress"));
+    appointments = static_cast<EntityCollection<Appointment>*>(addChildCollection(new EntityCollection<Appointment>(this, "appointments")));
+    contacts = static_cast<EntityCollection<Contact>*>(addChildCollection(new EntityCollection<Contact>(this, "contacts")));
+}
+
 } //models
 } //cm
 

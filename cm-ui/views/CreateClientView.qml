@@ -18,7 +18,7 @@ Item {
             left: parent.left
             right: parent.right
             top: parent.top
-            bottom: commandBar. top
+            bottom: commandBar.top
             margins: Style.sizeScreenMargin
         }
         clip: true

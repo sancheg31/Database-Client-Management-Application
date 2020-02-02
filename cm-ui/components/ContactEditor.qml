@@ -1,6 +1,7 @@
-import QtQuick 2.0
-import CM 1.0
+import QtQuick 2.9
 import "../components"
+import "../assets"
+import CM 1.0
 
 Panel {
     property Client client

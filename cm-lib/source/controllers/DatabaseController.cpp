@@ -188,6 +188,7 @@ bool DatabaseController::updateRow(const QString& tableName, const QString& id, 
     return query.numRowsAffected() > 0;
 }
 
+
 } //controllers
 } //cm
 

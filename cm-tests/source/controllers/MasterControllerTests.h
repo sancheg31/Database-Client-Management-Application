@@ -5,6 +5,9 @@
 #include "source/TestSuite.h"
 #include "controllers/MasterController.h"
 
+#include "mocks/MockObjectFactory.h"
+
+
 namespace cm {
 namespace controllers {
 
@@ -24,7 +27,8 @@ private slots:
     void welcomeMessage_returnsCorrectMessage();
 
 private:
-    MasterController masterController;
+    MasterController* masterController{nullptr};
+    framework::MockObjectFactory mockObjectFactory;
 };
 
 

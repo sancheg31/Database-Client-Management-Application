@@ -10,6 +10,7 @@ public:
         : dropdown(_dropdown)
     {
         for(auto pair : _values) {
+            if (pair.second != "")
              values.append(new DropDownValue(_dropdown, pair.first, pair.second));
         }
     }

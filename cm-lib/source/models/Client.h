@@ -42,6 +42,7 @@ public:
 
 public slots:
     void addContact();
+    void setDefault();
 signals:
     void appointmentsChanged();
     void contactsChanged();

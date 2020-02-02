@@ -1,8 +1,5 @@
-import QtQuick 2.12
-import QtQuick.Window 2.12
-import QtQuick.Controls 2.2
+import QtQuick 2.9
 import "../assets"
-import "../components"
 
 Item {
     property bool isCollapsed: true
@@ -44,6 +41,12 @@ Item {
                 description: "Find Client"
                 hoverColour: "#8aef63"
                 onNavigationButtonClicked: masterController.ui_navigationController.goFindClientView();
+            }
+            NavigationButton {
+                iconCharacter: "\uf09e"
+                description: "RSS Feed"
+                hoverColour: "#8acece"
+                onNavigationButtonClicked: masterController.ui_navigationController.goRssView();
             }
         }
     }

@@ -1,13 +1,16 @@
 
 
 #include "MasterController.h"
-#include "NavigationController.h"
-#include "DatabaseController.h"
+#include "networking/NetworkAccessManager.h"
+#include "networking/WebRequest.h"
 
 #include "models/Client.h"
 #include "models/ClientSearch.h"
 
 using namespace cm::models;
+using namespace cm::networking;
+using namespace cm::framework;
+using namespace cm::rss;
 
 namespace cm {
 namespace controllers {
@@ -15,55 +18,96 @@ namespace controllers {
 class MasterController::Implementation
 {
 public:
-    Implementation(MasterController* mc) : masterController(mc) {
-        databaseController = new DatabaseController(masterController);
-        navigationController = new NavigationController(masterController);
-        newClient = new Client(masterController);
-        clientSearch = new ClientSearch(masterController, databaseController);
-        commandController = new CommandController(masterController, databaseController, navigationController, newClient, clientSearch);
+    Implementation(MasterController* _masterController, IObjectFactory* _objectFactory)
+        : masterController(_masterController)
+        , objectFactory(_objectFactory)
+    {
+        databaseController = objectFactory->createDatabaseController(masterController);
+        clientSearch = objectFactory->createClientSearch(masterController, databaseController);
+        navigationController = objectFactory->createNavigationController(masterController);
+        networkAccessManager = objectFactory->createNetworkAccessManager(masterController);
+        rssWebRequest = objectFactory->createWebRequest(masterController, networkAccessManager, QUrl("http://feeds.bbci.co.uk/news/world/rss.xml"));
+        QObject::connect(rssWebRequest, &IWebRequest::requestComplete, masterController, &MasterController::onRssReplyReceived);
+        newClient = objectFactory->createClient(masterController);
+        commandController = objectFactory->createCommandController(masterController, databaseController, navigationController, newClient, clientSearch, rssWebRequest);
     }
 
     MasterController* masterController{nullptr};
-    CommandController* commandController{nullptr};
-    DatabaseController* databaseController{nullptr};
-    NavigationController* navigationController{nullptr};
+    IObjectFactory* objectFactory{nullptr};
+    ICommandController* commandController{nullptr};
+    IDatabaseController* databaseController{nullptr};
+    INavigationController* navigationController{nullptr};
     Client* newClient{nullptr};
     ClientSearch* clientSearch{nullptr};
+    INetworkAccessManager* networkAccessManager{nullptr};
+    IWebRequest* rssWebRequest{nullptr};
+    RssChannel* rssChannel{nullptr};
     QString welcomeMessage = "Welcome to the Client Management system!";
 };
 
-MasterController::MasterController(QObject* parent): QObject(parent) {
-    impl.reset(new Implementation(this));
+MasterController::MasterController(QObject* parent, IObjectFactory* objectFactory)
+    : QObject(parent)
+{
+    impl.reset(new Implementation(this, objectFactory));
 }
 
-MasterController::~MasterController() { }
+MasterController::~MasterController()
+{
+}
 
-CommandController* MasterController::commandController() {
+ICommandController* MasterController::commandController()
+{
     return impl->commandController;
 }
 
-DatabaseController* MasterController::databaseController() {
+IDatabaseController* MasterController::databaseController()
+{
     return impl->databaseController;
 }
 
-NavigationController* MasterController::navigationController() {
+INavigationController* MasterController::navigationController()
+{
     return impl->navigationController;
 }
 
-Client* MasterController::newClient() {
+Client* MasterController::newClient()
+{
     return impl->newClient;
 }
 
-ClientSearch* MasterController::clientSearch() {
+ClientSearch* MasterController::clientSearch()
+{
     return impl->clientSearch;
 }
 
-const QString& MasterController::welcomeMessage() const {
+RssChannel* MasterController::rssChannel()
+{
+    return impl->rssChannel;
+}
+
+const QString& MasterController::welcomeMessage() const
+{
     return impl->welcomeMessage;
 }
 
-void MasterController::selectClient(Client* client) {
+void MasterController::selectClient(Client* client)
+{
     impl->navigationController->goEditClientView(client);
+}
+
+void MasterController::onRssReplyReceived(int statusCode, QByteArray body)
+{
+    qDebug() << "Received RSS request response code " << statusCode << ":";
+    qDebug() << body;
+
+    if(impl->rssChannel) {
+        impl->rssChannel->deleteLater();
+        impl->rssChannel = nullptr;
+        emit rssChannelChanged();
+    }
+
+    impl->rssChannel = RssChannel::fromXml(body, this);
+    emit rssChannelChanged();
 }
 
 

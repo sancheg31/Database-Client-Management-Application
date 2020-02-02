@@ -1,14 +1,13 @@
-import QtQuick 2.12
-import QtQuick.Window 2.12
+import QtQuick 2.9
+import QtQuick.Window 2.2
 import QtQuick.Controls 2.2
-import CM 1.0
 import "../assets"
 import "../components"
 
 Window {
     visible: true
-    width: 1920
-    height: 1080
+    width: Style.widthWindow
+    height: Style.heightWindow
     title: qsTr("Client Management")
 
     Component.onCompleted: contentFrame.replace("qrc:/views/DashboardView.qml");
@@ -19,6 +18,7 @@ Window {
         onGoDashboardView: contentFrame.replace("qrc:/views/DashboardView.qml")
         onGoEditClientView: contentFrame.replace("qrc:/views/EditClientView.qml", {selectedClient: client})
         onGoFindClientView: contentFrame.replace("qrc:/views/FindClientView.qml")
+        onGoRssView: contentFrame.replace("qrc:/views/RssView.qml")
     }
 
     NavigationBar {

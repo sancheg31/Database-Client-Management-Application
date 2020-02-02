@@ -9,14 +9,18 @@
 #include "data/EnumeratorDecorator.h"
 #include "data/IntDecorator.h"
 #include "data/StringDecorator.h"
-#include "data/DropDown.h"
 #include "data/DropDownValue.h"
+#include "data/DropDown.h"
 #include "framework/Command.h"
+#include "framework/ObjectFactory.h"
 #include "models/Address.h"
 #include "models/Appointment.h"
 #include "models/Client.h"
 #include "models/ClientSearch.h"
 #include "models/Contact.h"
+#include "rss/RssChannel.h"
+#include "rss/RssImage.h"
+#include "rss/RssItem.h"
 
 int main(int argc, char *argv[])
 {
@@ -27,15 +31,16 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     qmlRegisterType<cm::controllers::MasterController>("CM", 1, 0, "MasterController");
-    qmlRegisterType<cm::controllers::NavigationController>("CM", 1, 0, "NavigationController");
-    qmlRegisterType<cm::controllers::CommandController>("CM", 1, 0, "CommandController");
+
+    qmlRegisterUncreatableType<cm::controllers::INavigationController>("CM", 1, 0, "INavigationController", "Interface");
+    qmlRegisterUncreatableType<cm::controllers::ICommandController>("CM", 1, 0, "ICommandController", "Interface");
 
     qmlRegisterType<cm::data::DateTimeDecorator>("CM", 1, 0, "DateTimeDecorator");
     qmlRegisterType<cm::data::EnumeratorDecorator>("CM", 1, 0, "EnumeratorDecorator");
     qmlRegisterType<cm::data::IntDecorator>("CM", 1, 0, "IntDecorator");
     qmlRegisterType<cm::data::StringDecorator>("CM", 1, 0, "StringDecorator");
     qmlRegisterType<cm::data::DropDown>("CM", 1, 0, "DropDown");
-    qmlRegisterType<cm::data::DropDownValue>("CM", 1, 9, "DropDownValue");
+    qmlRegisterType<cm::data::DropDownValue>("CM", 1, 0, "DropDownValue");
 
     qmlRegisterType<cm::models::Address>("CM", 1, 0, "Address");
     qmlRegisterType<cm::models::Appointment>("CM", 1, 0, "Appointment");
@@ -45,11 +50,15 @@ int main(int argc, char *argv[])
 
     qmlRegisterType<cm::framework::Command>("CM", 1, 0, "Command");
 
-    cm::controllers::MasterController masterController;
+    qmlRegisterType<cm::rss::RssChannel>("CM", 1, 0, "RssChannel");
+    qmlRegisterType<cm::rss::RssImage>("CM", 1, 0, "RssImage");
+    qmlRegisterType<cm::rss::RssItem>("CM", 1, 0, "RssItem");
+
+    cm::framework::ObjectFactory* objectFactory = new cm::framework::ObjectFactory;
+    cm::controllers::MasterController masterController(nullptr, objectFactory);
 
     QQmlApplicationEngine engine;
-    engine.addImportPath("qrc:/assets");
-    engine.addImportPath("qrc:/components");
+    engine.addImportPath("qrc:/");
     engine.rootContext()->setContextProperty("masterController", &masterController);
     engine.load(QUrl(QStringLiteral("qrc:/views/MasterView.qml")));
 
@@ -58,3 +67,4 @@ int main(int argc, char *argv[])
 
     return app.exec();
 }
+

@@ -8,7 +8,7 @@ MOC_DIR = $$PWD/build/$$DESTINATION_PATH/.moc
 RCC_DIR = $$PWD/build/$$DESTINATION_PATH/.qrc
 UI_DIR = $$PWD/build/$$DESTINATION_PATH/.ui
 
-QT += testlib
+QT += testlib xml network qml
 QT -= gui
 
 CONFIG += qt warn_on depend_includepath testcase
@@ -25,14 +25,17 @@ LIBS += -L$$PWD/../binaries/$$DESTINATION_PATH -lcm-lib
 HEADERS += source/TestSuite.h \
     source/controllers/MasterControllerTests.h \
     source/data/DateTimeDecoratorTests.h \
+    source/data/EnumeratorDecoratorTests.h \
     source/data/IntDecoratorTests.h \
     source/data/StringDecoratorTests.h \
+    source/mocks/MockObjectFactory.h \
     source/models/ClientTests.h
 
 SOURCES += source/main.cpp \
             source/TestSuite.cpp \
             source/controllers/MasterControllerTests.cpp \
             source/data/DateTimeDecoratorTests.cpp \
+            source/data/EnumeratorDecoratorTests.cpp \
             source/data/IntDecoratorTests.cpp \
             source/data/StringDecoratorTests.cpp \
             source/models/ClientTests.cpp

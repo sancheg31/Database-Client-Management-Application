@@ -9,8 +9,7 @@ MOC_DIR = $$PWD/build/$$DESTINATION_PATH/.moc
 RCC_DIR = $$PWD/build/$$DESTINATION_PATH/.qrc
 UI_DIR = $$PWD/build/$$DESTINATION_PATH/.ui
 
-QT += quick
-QT += qml
+QT += quick qml xml
 
 CONFIG += c++17
 
@@ -53,12 +52,14 @@ DISTFILES += \
     components/CommandButton.qml \
     components/NavigationButton.qml \
     components/Panel.qml \
+    components/RssItemDelegate.qml \
     components/SearchResultDelegate.qml \
     components/StringEditorSingleLine.qml \
     views/DashboardView.qml \
     views/EditClientView.qml \
     components/EnumeratorSelectorView.qml \
     views/FindClientView.qml \
+    views/RssView.qml \
     views/SplashView.qml \
     views/CreateClientView.qml \
     views/AnchorsDemo.qml \

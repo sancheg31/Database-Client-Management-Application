@@ -22,7 +22,7 @@ class CMLIB_EXPORT EnumeratorDecorator : public DataDecorator
     Q_PROPERTY( QString ui_valueDescription READ valueDescription NOTIFY valueChanged )
 
 public:
-    EnumeratorDecorator(Entity* parentEntity = nullptr, const QString& key = "SomeItemKey", const QString& label = "", int value = 0, const std::map<int, QString>& descriptionMapper = std::map<int, QString>());
+    EnumeratorDecorator(Entity* parentEntity = nullptr, const QString& key = "", const QString& label = "", int value = 0, const std::map<int, QString>& descriptionMapper = std::map<int, QString>());
     ~EnumeratorDecorator();
 
     EnumeratorDecorator& setValue(int value);

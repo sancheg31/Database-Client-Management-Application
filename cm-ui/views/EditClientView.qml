@@ -62,6 +62,12 @@ Item {
                 address: selectedClient.ui_billingAddress
                 headerText: "Billing Address"
             }
+
+            ContactEditor {
+                width: scrollView.width
+                client: selectedClient
+                headerText: "Contact Details"
+            }
         }
     }
 

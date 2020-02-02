@@ -38,6 +38,7 @@ private:
     QScopedPointer<Implementation> impl;
 };
 
+
 } //framework
 } //cm
 

@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_cm__models__Client_t {
-    QByteArrayData data[15];
-    char stringdata0[279];
+    QByteArrayData data[16];
+    char stringdata0[290];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -36,22 +36,23 @@ QT_MOC_LITERAL(1, 19, 19), // "appointmentsChanged"
 QT_MOC_LITERAL(2, 39, 0), // ""
 QT_MOC_LITERAL(3, 40, 15), // "contactsChanged"
 QT_MOC_LITERAL(4, 56, 10), // "addContact"
-QT_MOC_LITERAL(5, 67, 12), // "ui_reference"
-QT_MOC_LITERAL(6, 80, 26), // "cm::data::StringDecorator*"
-QT_MOC_LITERAL(7, 107, 7), // "ui_name"
-QT_MOC_LITERAL(8, 115, 16), // "ui_supplyAddress"
-QT_MOC_LITERAL(9, 132, 20), // "cm::models::Address*"
-QT_MOC_LITERAL(10, 153, 17), // "ui_billingAddress"
-QT_MOC_LITERAL(11, 171, 15), // "ui_appointments"
-QT_MOC_LITERAL(12, 187, 41), // "QQmlListProperty<cm::models::..."
-QT_MOC_LITERAL(13, 229, 11), // "ui_contacts"
-QT_MOC_LITERAL(14, 241, 37) // "QQmlListProperty<cm::models::..."
+QT_MOC_LITERAL(5, 67, 10), // "setDefault"
+QT_MOC_LITERAL(6, 78, 12), // "ui_reference"
+QT_MOC_LITERAL(7, 91, 26), // "cm::data::StringDecorator*"
+QT_MOC_LITERAL(8, 118, 7), // "ui_name"
+QT_MOC_LITERAL(9, 126, 16), // "ui_supplyAddress"
+QT_MOC_LITERAL(10, 143, 20), // "cm::models::Address*"
+QT_MOC_LITERAL(11, 164, 17), // "ui_billingAddress"
+QT_MOC_LITERAL(12, 182, 15), // "ui_appointments"
+QT_MOC_LITERAL(13, 198, 41), // "QQmlListProperty<cm::models::..."
+QT_MOC_LITERAL(14, 240, 11), // "ui_contacts"
+QT_MOC_LITERAL(15, 252, 37) // "QQmlListProperty<cm::models::..."
 
     },
     "cm::models::Client\0appointmentsChanged\0"
-    "\0contactsChanged\0addContact\0ui_reference\0"
-    "cm::data::StringDecorator*\0ui_name\0"
-    "ui_supplyAddress\0cm::models::Address*\0"
+    "\0contactsChanged\0addContact\0setDefault\0"
+    "ui_reference\0cm::data::StringDecorator*\0"
+    "ui_name\0ui_supplyAddress\0cm::models::Address*\0"
     "ui_billingAddress\0ui_appointments\0"
     "QQmlListProperty<cm::models::Appointment>\0"
     "ui_contacts\0QQmlListProperty<cm::models::Contact>"
@@ -64,19 +65,20 @@ static const uint qt_meta_data_cm__models__Client[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   14, // methods
-       6,   32, // properties
+       4,   14, // methods
+       6,   38, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   29,    2, 0x06 /* Public */,
-       3,    0,   30,    2, 0x06 /* Public */,
+       1,    0,   34,    2, 0x06 /* Public */,
+       3,    0,   35,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       4,    0,   31,    2, 0x0a /* Public */,
+       4,    0,   36,    2, 0x0a /* Public */,
+       5,    0,   37,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -84,14 +86,15 @@ static const uint qt_meta_data_cm__models__Client[] = {
 
  // slots: parameters
     QMetaType::Void,
+    QMetaType::Void,
 
  // properties: name, type, flags
-       5, 0x80000000 | 6, 0x00095409,
-       7, 0x80000000 | 6, 0x00095409,
-       8, 0x80000000 | 9, 0x00095409,
-      10, 0x80000000 | 9, 0x00095409,
-      11, 0x80000000 | 12, 0x00495009,
-      13, 0x80000000 | 14, 0x00495009,
+       6, 0x80000000 | 7, 0x00095409,
+       8, 0x80000000 | 7, 0x00095409,
+       9, 0x80000000 | 10, 0x00095409,
+      11, 0x80000000 | 10, 0x00095409,
+      12, 0x80000000 | 13, 0x00495009,
+      14, 0x80000000 | 15, 0x00495009,
 
  // properties: notify_signal_id
        0,
@@ -113,6 +116,7 @@ void cm::models::Client::qt_static_metacall(QObject *_o, QMetaObject::Call _c, i
         case 0: _t->appointmentsChanged(); break;
         case 1: _t->contactsChanged(); break;
         case 2: _t->addContact(); break;
+        case 3: _t->setDefault(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -192,13 +196,13 @@ int cm::models::Client::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 3)
+        if (_id < 4)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 3;
+        _id -= 4;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 3)
+        if (_id < 4)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 3;
+        _id -= 4;
     }
 #ifndef QT_NO_PROPERTIES
    else if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty

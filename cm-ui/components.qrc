@@ -13,6 +13,7 @@
         <file alias="ContactDelegate.qml">components/ContactDelegate.qml</file>
         <file alias="EnumeratorSelector.qml">components/EnumeratorSelector.qml</file>
         <file alias="FormButton.qml">components/FormButton.qml</file>
-        <file alias = "EnumeratorSelectorView.qml">components/EnumeratorSelectorView.qml</file>
+        <file alias="EnumeratorSelectorView.qml">components/EnumeratorSelectorView.qml</file>
+        <file alias="RssItemDelegate.qml">components/RssItemDelegate.qml</file>
     </qresource>
 </RCC>

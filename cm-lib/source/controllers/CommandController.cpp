@@ -5,19 +5,20 @@
 
 using namespace cm::framework;
 using namespace cm::models;
+using namespace cm::networking;
 
 namespace cm {
 namespace controllers {
-
 class CommandController::Implementation
 {
 public:
-    Implementation(CommandController* _commandController, IDatabaseController* _databaseController, NavigationController* _navigationController, Client* _newClient, ClientSearch* _clientSearch)
+    Implementation(CommandController* _commandController, IDatabaseController* _databaseController, INavigationController* _navigationController, Client* _newClient, ClientSearch* _clientSearch, IWebRequest* _rssWebRequest)
         : commandController(_commandController)
         , databaseController(_databaseController)
         , navigationController(_navigationController)
         , newClient(_newClient)
         , clientSearch(_clientSearch)
+        , rssWebRequest(_rssWebRequest)
     {
         Command* createClientSaveCommand = new Command( commandController, QChar( 0xf0c7 ), "Save" );
         QObject::connect( createClientSaveCommand, &Command::executed, commandController, &CommandController::onCreateClientSaveExecuted );
@@ -34,24 +35,30 @@ public:
         Command* editClientSaveCommand = new Command( commandController, QChar( 0xf0c7 ), "Save" );
         QObject::connect( editClientSaveCommand, &Command::executed, commandController, &CommandController::onEditClientSaveExecuted );
         editClientViewContextCommands.append( editClientSaveCommand );
+
+        Command* rssRefreshCommand = new Command( commandController, QChar( 0xf021 ), "Refresh" );
+        QObject::connect( rssRefreshCommand , &Command::executed, commandController, &CommandController::onRssRefreshExecuted );
+        rssViewContextCommands.append( rssRefreshCommand  );
     }
 
     CommandController* commandController{nullptr};
 
     IDatabaseController* databaseController{nullptr};
-    NavigationController* navigationController{nullptr};
+    INavigationController* navigationController{nullptr};
     Client* newClient{nullptr};
     ClientSearch* clientSearch{nullptr};
     Client* selectedClient{nullptr};
+    IWebRequest* rssWebRequest{nullptr};
     QList<Command*> createClientViewContextCommands{};
     QList<Command*> findClientViewContextCommands{};
     QList<Command*> editClientViewContextCommands{};
+    QList<Command*> rssViewContextCommands{};
 };
 
-CommandController::CommandController(QObject* parent, IDatabaseController* databaseController, NavigationController* navigationController, Client* newClient, ClientSearch* clientSearch)
-    : QObject(parent)
+CommandController::CommandController(QObject* parent, IDatabaseController* databaseController, INavigationController* navigationController, Client* newClient, ClientSearch* clientSearch, IWebRequest* rssWebRequest)
+    : ICommandController(parent)
 {
-    impl.reset(new Implementation(this, databaseController, navigationController, newClient, clientSearch));
+    impl.reset(new Implementation(this, databaseController, navigationController, newClient, clientSearch, rssWebRequest));
 }
 
 CommandController::~CommandController()
@@ -73,6 +80,11 @@ QQmlListProperty<Command> CommandController::ui_editClientViewContextCommands()
     return QQmlListProperty<Command>(this, impl->editClientViewContextCommands);
 }
 
+QQmlListProperty<framework::Command> CommandController::ui_rssViewContextCommands()
+{
+    return QQmlListProperty<Command>(this, impl->rssViewContextCommands);
+}
+
 void CommandController::setSelectedClient(Client* client)
 {
     impl->selectedClient = client;
@@ -89,6 +101,7 @@ void CommandController::onCreateClientSaveExecuted()
     impl->clientSearch->searchText()->setValue(impl->newClient->id());
     impl->clientSearch->search();
     impl->navigationController->goFindClientView();
+    impl->newClient->setDefault();
 }
 
 void CommandController::onFindClientSearchExecuted()
@@ -119,5 +132,12 @@ void CommandController::onEditClientDeleteExecuted()
     impl->clientSearch->search();
     impl->navigationController->goDashboardView();
 }
+
+void CommandController::onRssRefreshExecuted()
+{
+    qDebug() << "You executed the RSS Refresh command!";
+    impl->rssWebRequest->execute();
+}
+
 } //controllers
 } //cm
