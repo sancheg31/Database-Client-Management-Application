@@ -8,7 +8,7 @@ QT += sql network xml
 TARGET = cm-lib
 TEMPLATE = lib
 
-CONFIG += c++17
+CONFIG += c++17 create_prl
 
 DESTDIR = $$PWD/../binaries/$$DESTINATION_PATH
 OBJECTS_DIR = $$PWD/build/$$DESTINATION_PATH/.obj

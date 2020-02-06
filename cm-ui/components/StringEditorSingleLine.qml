@@ -50,8 +50,6 @@ Item {
             }
         }
 
-
-
         Binding {
             target: stringDecorator
             property: "ui_value"

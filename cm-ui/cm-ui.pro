@@ -11,11 +11,12 @@ UI_DIR = $$PWD/build/$$DESTINATION_PATH/.ui
 
 QT += quick qml xml
 
-CONFIG += c++17
+CONFIG += c++17 link_prl
 
 INCLUDEPATH += source
 INCLUDEPATH += views
 INCLUDEPATH += ../cm-lib/source
+
 SOURCES += source/main.cpp
 
 LIBS += -L$$PWD/../binaries/$$DESTINATION_PATH -lcm-lib
@@ -43,6 +44,7 @@ DISTFILES += \
     assets/fontawesome.ttf \
     components.qml \
     components/AddressEditor.qml \
+    components/ClientEditor.qml \
     components/CommandBar.qml \
     components/ContactDelegate.qml \
     components/ContactEditor.qml \

@@ -11,11 +11,8 @@ namespace models {
 class ClientSearch::Implementation
 {
 public:
-    Implementation(ClientSearch* _clientSearch, IDatabaseController* _databaseController)
-        : clientSearch(_clientSearch)
-        , databaseController(_databaseController)
-    {
-    }
+    Implementation(ClientSearch* cs, IDatabaseController* controller)
+        : clientSearch(cs), databaseController(controller) { }
 
     ClientSearch* clientSearch{nullptr};
     IDatabaseController* databaseController{nullptr};
@@ -23,32 +20,26 @@ public:
     data::EntityCollection<Client>* searchResults{nullptr};
 };
 
-ClientSearch::ClientSearch(QObject* parent, IDatabaseController* databaseController)
-    : Entity(parent, "ClientSearch")
+ClientSearch::ClientSearch(QObject* parent, IDatabaseController* controller): Entity(parent, "ClientSearch")
 {
-    impl.reset(new Implementation(this, databaseController));
+    impl.reset(new Implementation(this, controller));
     impl->searchText = static_cast<StringDecorator*>(addDataItem(new StringDecorator(this, "searchText", "Search Text")));
     impl->searchResults = static_cast<EntityCollection<Client>*>(addChildCollection(new EntityCollection<Client>(this, "searchResults")));
 
     connect(impl->searchResults, &EntityCollection<Client>::collectionChanged, this, &ClientSearch::searchResultsChanged);
 }
 
-ClientSearch::~ClientSearch()
-{
-}
+ClientSearch::~ClientSearch() { }
 
-StringDecorator* ClientSearch::searchText()
-{
+StringDecorator* ClientSearch::searchText() {
     return impl->searchText;
 }
 
-QQmlListProperty<Client> ClientSearch::ui_searchResults()
-{
+QQmlListProperty<Client> ClientSearch::ui_searchResults() {
     return QQmlListProperty<Client>(this, impl->searchResults->derivedEntities());
 }
 
-void ClientSearch::search()
-{
+void ClientSearch::search() {
     qDebug() << "Searching for " << impl->searchText->value() << "...";
 
     auto resultsArray = impl->databaseController->find("client", impl->searchText->value());

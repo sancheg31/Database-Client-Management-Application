@@ -13,31 +13,27 @@ class CommandController::Implementation
 {
 public:
     Implementation(CommandController* _commandController, IDatabaseController* _databaseController, INavigationController* _navigationController, Client* _newClient, ClientSearch* _clientSearch, IWebRequest* _rssWebRequest)
-        : commandController(_commandController)
-        , databaseController(_databaseController)
-        , navigationController(_navigationController)
-        , newClient(_newClient)
-        , clientSearch(_clientSearch)
-        , rssWebRequest(_rssWebRequest)
+        : commandController(_commandController), databaseController(_databaseController), navigationController(_navigationController)
+        , newClient(_newClient), clientSearch(_clientSearch), rssWebRequest(_rssWebRequest)
     {
         Command* createClientSaveCommand = new Command( commandController, QChar( 0xf0c7 ), "Save" );
-        QObject::connect( createClientSaveCommand, &Command::executed, commandController, &CommandController::onCreateClientSaveExecuted );
-        createClientViewContextCommands.append( createClientSaveCommand );
+        QObject::connect(createClientSaveCommand, SIGNAL(executed()), commandController, SLOT(onCreateClientSaveExecuted()));
+        createClientViewContextCommands.append(createClientSaveCommand);
 
         Command* findClientSearchCommand = new Command( commandController, QChar( 0xf002 ), "Search" );
-        QObject::connect( findClientSearchCommand, &Command::executed, commandController, &CommandController::onFindClientSearchExecuted );
-        findClientViewContextCommands.append( findClientSearchCommand );
+        QObject::connect(findClientSearchCommand, SIGNAL(executed()), commandController, SLOT(onFindClientSearchExecuted()));
+        findClientViewContextCommands.append(findClientSearchCommand);
 
         Command* editClientDeleteCommand = new Command( commandController, QChar( 0xf235 ), "Delete" );
-        QObject::connect( editClientDeleteCommand, &Command::executed, commandController, &CommandController::onEditClientDeleteExecuted );
+        QObject::connect(editClientDeleteCommand, SIGNAL(executed()), commandController, SLOT(onEditClientDeleteExecuted()));
         editClientViewContextCommands.append( editClientDeleteCommand );
 
         Command* editClientSaveCommand = new Command( commandController, QChar( 0xf0c7 ), "Save" );
-        QObject::connect( editClientSaveCommand, &Command::executed, commandController, &CommandController::onEditClientSaveExecuted );
+        QObject::connect(editClientSaveCommand, SIGNAL(executed()), commandController, SLOT(onEditClientSaveExecuted()));
         editClientViewContextCommands.append( editClientSaveCommand );
 
         Command* rssRefreshCommand = new Command( commandController, QChar( 0xf021 ), "Refresh" );
-        QObject::connect( rssRefreshCommand , &Command::executed, commandController, &CommandController::onRssRefreshExecuted );
+        QObject::connect(rssRefreshCommand , SIGNAL(executed()), commandController, SLOT(onRssRefreshExecuted()));
         rssViewContextCommands.append( rssRefreshCommand  );
     }
 
@@ -85,13 +81,11 @@ QQmlListProperty<framework::Command> CommandController::ui_rssViewContextCommand
     return QQmlListProperty<Command>(this, impl->rssViewContextCommands);
 }
 
-void CommandController::setSelectedClient(Client* client)
-{
+void CommandController::setSelectedClient(Client* client) {
     impl->selectedClient = client;
 }
 
-void CommandController::onCreateClientSaveExecuted()
-{
+void CommandController::onCreateClientSaveExecuted() {
     qDebug() << "You executed the Save command!";
 
     impl->databaseController->createRow(impl->newClient->key(), impl->newClient->id(), impl->newClient->toJson());
@@ -104,24 +98,18 @@ void CommandController::onCreateClientSaveExecuted()
     impl->newClient->setDefault();
 }
 
-void CommandController::onFindClientSearchExecuted()
-{
+void CommandController::onFindClientSearchExecuted() {
     qDebug() << "You executed the Search command!";
-
     impl->clientSearch->search();
 }
 
-void CommandController::onEditClientSaveExecuted()
-{
+void CommandController::onEditClientSaveExecuted() {
     qDebug() << "You executed the Save command!";
-
     impl->databaseController->updateRow(impl->selectedClient->key(), impl->selectedClient->id(), impl->selectedClient->toJson());
-
     qDebug() << "Updated client saved.";
 }
 
-void CommandController::onEditClientDeleteExecuted()
-{
+void CommandController::onEditClientDeleteExecuted() {
     qDebug() << "You executed the Delete command!";
 
     impl->databaseController->deleteRow(impl->selectedClient->key(), impl->selectedClient->id());
@@ -133,8 +121,7 @@ void CommandController::onEditClientDeleteExecuted()
     impl->navigationController->goDashboardView();
 }
 
-void CommandController::onRssRefreshExecuted()
-{
+void CommandController::onRssRefreshExecuted() {
     qDebug() << "You executed the RSS Refresh command!";
     impl->rssWebRequest->execute();
 }

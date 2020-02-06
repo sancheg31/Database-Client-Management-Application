@@ -27,7 +27,8 @@ Item {
             spacing: Style.sizeScreenMargin
             width: scrollView.width
             ClientEditor {
-                client: newClient
+                reference: newClient.ui_reference
+                name: newClient.ui_name
                 headerText: "Client Details"
             }
             AddressEditor {

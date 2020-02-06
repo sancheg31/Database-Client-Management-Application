@@ -2,6 +2,7 @@ platform_path = unknown-platform
 compiler_path = unknown-compiler
 processor_path = unknown-processor
 build_path = unknown-build
+
 PLATFORM_WIN {
     platform_path = windows
 }
@@ -28,8 +29,10 @@ PROCESSOR_x86 {
 }
 BUILD_DEBUG {
     build_path = debug
-} else {
+}
+BUILD_RELEASE {
     build_path = release
 }
+
 DESTINATION_PATH = $$platform_path/$$compiler_path/$$processor_path/$$build_path
 message(Dest path: $${DESTINATION_PATH})

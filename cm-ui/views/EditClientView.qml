@@ -29,28 +29,10 @@ Item {
             spacing: Style.sizeScreenMargin
             width: scrollView.width
 
-            Panel {
+            ClientEditor {
                 headerText: "Client Details"
-                contentComponent:
-                    Column {
-                        spacing: Style.sizeControlSpacing
-
-                        StringEditorSingleLine {
-                            stringDecorator: selectedClient.ui_reference
-                            anchors {
-                                left: parent.left
-                                right: parent.right
-                            }
-                        }
-
-                        StringEditorSingleLine {
-                            stringDecorator: selectedClient.ui_name
-                            anchors {
-                                left: parent.left
-                                right: parent.right
-                            }
-                        }
-                    }
+                reference: selectedClient.ui_reference
+                name: selectedClient.ui_name
             }
 
             AddressEditor {
